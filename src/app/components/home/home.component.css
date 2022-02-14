@@ -1,0 +1,7 @@
+.welcome {
+  text-align: center;
+  margin-top: 10px;
+}
+.welcome > section {
+  margin: 5px 20px;
+}
