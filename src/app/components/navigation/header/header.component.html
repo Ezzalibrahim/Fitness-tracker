@@ -15,16 +15,16 @@
     </div>
     <div fxFlex  fxLayout="row" fxHide.xs>
         <ul fxFlex fxLayoutGap="10px" fxLayoutAlign="end center" class="navegation-items">
-            <li *ngIf="!isAuth" >
+            <li *ngIf="!(isAuth$ | async)" >
                 <a routerLink="/login">Login</a>
             </li>
-            <li *ngIf="!isAuth" >
+            <li *ngIf="!(isAuth$ | async)" >
                 <a routerLink="/signup">Signup</a>
             </li>
-            <li *ngIf="isAuth">
+            <li *ngIf="isAuth$ | async">
                 <a routerLink="/training">Training</a>
             </li  >
-            <li *ngIf="isAuth">
+            <li *ngIf="isAuth$ | async">
                 <a (click)="logout()" routerLink="">Logout</a>
             </li>
         </ul>
