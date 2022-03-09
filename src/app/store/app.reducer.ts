@@ -1,13 +1,21 @@
-import { ActionReducerMap, createFeatureSelector, createReducer, createSelector } from '@ngrx/store';
-import * as SearedUiReducer from '../seared/ui.reducer';
+import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
+import * as SharedUiReducer from '../shared/ui.reducer';
+import * as AuthReducer from './auth/auth.reducer';
 
 export interface State {
-    ui : SearedUiReducer.State
+    ui : SharedUiReducer.State,
+    auth : AuthReducer.State
 }
 
 export const reducers : ActionReducerMap<State> = {
-    ui  : SearedUiReducer.appReducer
+    ui  : SharedUiReducer.appReducer,
+    auth : AuthReducer.authReducer
 };
 
-export const getUiState = createFeatureSelector<SearedUiReducer.State>('ui');
-export const getIsLoading = createSelector(getUiState , SearedUiReducer.getIsLoading);
+//create selector for menage UI State
+export const getUiState = createFeatureSelector<SharedUiReducer.State>('ui');
+export const getIsLoading = createSelector(getUiState , SharedUiReducer.getIsLoading);
+
+//create selector for menage Authentication State
+export const getAuthState = createFeatureSelector<AuthReducer.State>('auth');
+export const getIsAuth = createSelector(getAuthState , AuthReducer.getIsAuth);
