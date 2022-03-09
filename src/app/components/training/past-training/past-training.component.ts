@@ -1,37 +1,35 @@
-import { AfterViewInit, Component, OnDestroy, OnInit ,ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit ,ViewChild } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { Exercise } from 'src/app/services/training/exercise.model';
 import { TrainingService } from 'src/app/services/training/training.service';
-
+import * as TrainingReducer  from '../../../store/training/training.reducer'
 
 @Component({
   selector: 'app-past-training',
   templateUrl: './past-training.component.html',
   styleUrls: ['./past-training.component.css']
 })
-export class PastTrainingComponent implements OnInit , AfterViewInit ,OnDestroy {
+export class PastTrainingComponent implements OnInit , AfterViewInit {
   @ViewChild(MatSort) sort : MatSort; 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  exercisesSubscription : Subscription;
 
   displayedColumns: string[] = ['name', 'duration','calories','date','state'];
   pastExercises : MatTableDataSource<Exercise> = new MatTableDataSource();
 
 
-  constructor(private trainingService : TrainingService) { }
+  constructor(private trainingService : TrainingService,
+              private store : Store<TrainingReducer.State>) { }
 
   ngOnInit(): void {
+    this.store.select(TrainingReducer.getFinishedExercises).subscribe((exercises : Exercise[]) => {
+      this.pastExercises.data = exercises;
+    });
     this.trainingService.fetchPastExercises();
-    this.exercisesSubscription = this.trainingService.finishedExercisesChanged.subscribe(
-      (finishedexercises)=>{
-        this.pastExercises.data =  finishedexercises;
-      }
-    );
   }
 
   ngAfterViewInit(): void {
@@ -43,10 +41,5 @@ export class PastTrainingComponent implements OnInit , AfterViewInit ,OnDestroy 
     this.pastExercises.filter = filter.trim().toLowerCase();
   }
 
-  ngOnDestroy(): void {
-    if(this.exercisesSubscription){
-      this.exercisesSubscription.unsubscribe();
-    }
-  }
 
 }
