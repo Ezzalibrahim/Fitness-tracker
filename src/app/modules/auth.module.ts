@@ -5,7 +5,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { LoginComponent } from "../components/auth/login/login.component";
 import { SignupComponent } from "../components/auth/signup/signup.component";
-import { SharedModule } from "./seared.module";
+import { SharedModule } from "./shared.module";
 import { AuthRoutingModule } from "../routes/auth-routing.module";
 
 
