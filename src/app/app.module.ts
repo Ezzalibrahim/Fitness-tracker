@@ -14,7 +14,7 @@ import { AuthService } from './services/auth/auth.service';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
-import { UIService } from './seared/ui.service';
+import { UIService } from './shared/ui.service';
 import { AuthModule } from './modules/auth.module';
 import { TrainingService } from './services/training/training.service';
 import { HeaderComponent } from './components/navigation/header/header.component';
